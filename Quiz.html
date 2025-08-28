@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Malaysian Street Food Are You?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --secondary: #F7931E;
+            --accent: #FFA400;
+            --light: #FFF5EB;
+            --dark: #2F4858;
+            --success: #4CAF50;
+            --warning: #FF9800;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #FFF5EB 0%, #FFE4C9 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            padding-bottom: 40px;
+        }
+        
+        .header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header h1 {
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 0;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            background: white;
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 12px 15px;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(255, 107, 53, 0.4);
+        }
+        
+        .quiz-option {
+            padding: 12px;
+            margin: 8px 0;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quiz-option:hover {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 53, 0.05);
+        }
+        
+        .quiz-option.selected {
+            border-color: var(--primary);
+            background-color: rgba(255, 107, 53, 0.1);
+            position: relative;
+        }
+        
+        .quiz-option.selected::after {
+            content: '✓';
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        
+        .progress {
+            height: 8px;
+            border-radius: 8px;
+            background: #f0f0f0;
+            margin: 15px 0;
+        }
+        
+        .progress-bar {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 8px;
+        }
+        
+        .food-image {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin: 0 auto 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .result-title {
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.6rem;
+        }
+        
+        .result-subtitle {
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .result-description {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .btn-retry {
+            background: linear-gradient(to right, #6c757d, #5a6268);
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .btn-share {
+            background: transparent;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            width: 100%;
+        }
+        
+        .btn-share:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .storage-badge {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            background: var(--dark);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 100;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .nav-buttons .btn {
+            width: 48%;
+        }
+
+        @media (max-width: 576px) {
+            .header h1 {
+                font-size: 1.7rem;
+            }
+            
+            .card-header {
+                font-size: 1rem;
+            }
+            
+            .food-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .quiz-option {
+                padding: 10px;
+            }
+            
+            .result-title {
+                font-size: 1.4rem;
+            }
+            
+            .nav-buttons .btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--dark);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1050;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #D16002; padding: 0.8rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+      <div class="container">
+          <a class="navbar-brand" href="index.html" style="font-weight: 700; font-size: 1.5rem; color: white !important;">
+              <i class="fas fa-utensils me-2"></i>Streets of Food
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item">
+                      <a class="nav-link" href="index.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="About.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Malaysia.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Malaysia</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Global.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Global</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Event.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Events</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Recipe.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Recipe</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link active" href="Quiz.html" style="color: white !important; background-color: #A54D00; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Quiz</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Team.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Team</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="Team.html#feedbackSection" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Feedback</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+  </nav>
+
+<style>
+    .navbar-nav .nav-link:hover {
+        color: white !important;
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .navbar-toggler {
+        border: none;
+        color: white !important;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+    
+    @media (min-width: 992px) {
+        .navbar-nav .nav-link {
+            margin: 0 0.2rem;
+        }
+    }
+</style>
+
+    <div class="header">
+        <div class="container">
+            <h1><i class="fas fa-utensils me-2"></i>What Malaysian Street Food Are You?</h1>
+            <p>Discover which delicious Malaysian street food matches your personality!</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="quiz-page">
+            <div class="row justify-content-center">
+                <div class="col-12 col-md-10 col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>Question <span id="current-question">1</span> of <span id="total-questions">11</span></div>
+                                <div class="progress" style="width: 65%; height: 10px;">
+                                    <div id="quiz-progress" class="progress-bar" style="width: 9%;"></div>
+                                </div>
+                            </div>
+                            
+                            <div id="question-container">
+                                <h4 class="mb-3 text-center" id="question">What would you do on a Friday night?</h4>
+                                
+                                <div class="quiz-option" data-value="Keropok Lekor">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Lepak mamak until 3 AM.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Char Koey Kak">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Drive to Cameron/Genting Highlands.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Tau Foo Fah">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Binge-watch your favourite show.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Vadai">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Karaoke with friends.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Karipap">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Gaming all night.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Putu Mayam">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Drive aimlessly with emo songs playing.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Popiah">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Scroll Instagram explore page/TikTok for you page.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Satay">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Go on a supper hunt.
+                                        </label>
+                                    </div>
+                                </div>
+                                
+                                <div class="quiz-option" data-value="Kuih Seri Muka">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="quizOption">
+                                        <label class="form-check-label">
+                                            Sleep early.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="nav-buttons">
+                                <button id="prev-btn" class="btn btn-secondary" disabled>
+                                    <i class="fas fa-arrow-left me-1"></i> Previous
+                                </button>
+                                <button id="next-btn" class="btn btn-primary">
+                                    Next <i class="fas fa-arrow-right ms-1"></i>
+                                </button>
+                                <button id="submit-quiz" class="btn btn-success" style="display: none;">
+                                    See My Result!
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-result" class="card text-center" style="display: none;">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0">You are...</h3>
+                        </div>
+                        <div class="card-body py-4">
+                            <h2 class="result-title" id="result-food">Char Koey Kak!</h2>
+                            <p class="result-subtitle" id="result-subtitle">The spontaneous chaos</p>
+                            <img id="result-image" src="https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=80" class="food-image" alt="Char Koey Kak">
+                            <div class="result-description" id="result-description">
+                                You're Char Koey Kak! You bring spontaneous chaos and excitement wherever you go. Your energetic and unpredictable nature makes life more interesting. People love your bold approach to life and your ability to turn any situation into an adventure!
+                            </div>
+                            <div class="mt-3">
+                                <button id="retry-quiz" class="btn-retry">
+                                    <i class="fas fa-redo me-1"></i> Try Again
+                                </button>
+                            </div>
+                            <div class="row mt-3">
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button class="btn-share share-btn" data-platform="twitter">
+                                        <i class="fab fa-twitter me-1"></i> Twitter
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button class="btn-share share-btn" data-platform="facebook">
+                                        <i class="fab fa-facebook me-1"></i> Facebook
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button class="btn-share share-btn" data-platform="whatsapp">
+                                        <i class="fab fa-whatsapp me-1"></i> WhatsApp
+                                    </button>
+                                </div>
+                                <div class="col-6 col-md-3 mb-2">
+                                    <button class="btn-share share-btn" data-platform="copy">
+                                        <i class="fas fa-link me-1"></i> Copy Link
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        Link copied to clipboard!
+    </div>
+
+    <div class="storage-badge" id="storage-indicator">
+        <i class="fas fa-database me-1"></i> Using Local Storage
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What would you do on a Friday night?",
+                options: [
+                    { text: "Lepak mamak until 3 AM.", value: "Keropok Lekor" },
+                    { text: "Drive to Cameron/Genting Highlands.", value: "Char Koey Kak" },
+                    { text: "Binge-watch your favourite show.", value: "Tau Foo Fah" },
+                    { text: "Karaoke with friends.", value: "Vadai" },
+                    { text: "Gaming all night.", value: "Karipap" },
+                    { text: "Drive aimlessly with emo songs playing.", value: "Putu Mayam" },
+                    { text: "Scroll Instagram explore page/TikTok for you page.", value: "Popiah" },
+                    { text: "Go on a supper hunt.", value: "Satay" },
+                    { text: "Sleep early.", value: "Kuih Seri Muka" }
+                ]
+            },
+            {
+                question: "Which friend are you in the friend group?",
+                options: [
+                    { text: "The designated driver.", value: "Karipap" },
+                    { text: "The blur one, always going 'huh?'.", value: "Tau Foo Fah" },
+                    { text: "The foodie who always suggest where to eat.", value: "Satay" },
+                    { text: "The one who let's the phone eat first (take picture of food before eating).", value: "Putu Mayam" },
+                    { text: "The mak cik bawang/tea spiller/fruit bringer.", value: "Vadai" },
+                    { text: "The one who makes people laugh.", value: "Char Koey Kak" },
+                    { text: "The chill one who goes with the flow.", value: "Keropok Lekor" },
+                    { text: "The one who is always late.", value: "Kuih Seri Muka" },
+                    { text: "The one who always have powerbank and tissues.", value: "Popiah" }
+                ]
+            },
+            {
+                question: "You are late to work/class, what do you do?",
+                options: [
+                    { text: "Buy food to bribe the boss/lecturer.", value: "Char Koey Kak" },
+                    { text: "Say you were stuck in a traffic jam/cannot find parking.", value: "Karipap" },
+                    { text: "Pretend nothing happened and just go in.", value: "Tau Foo Fah" },
+                    { text: "Blame the LRT/MRT/Grab.", value: "Satay" },
+                    { text: "Say you had a bad stomachache.", value: "Vadai" },
+                    { text: "Text your boss/lecturer 'OTW' when you just woke up.", value: "Popiah" },
+                    { text: "Dramatic entrance.", value: "Putu Mayam" },
+                    { text: "Tell the truth.", value: "Keropok Lekor" },
+                    { text: "Just ponteng.", value: "Kuih Seri Muka" }
+                ]
+            },
+            {
+                question: "You are at the buffet, what is the first thing you grab?",
+                options: [
+                    { text: "Satay.", value: "Satay" },
+                    { text: "Nasi with lots of side dishes.", value: "Karipap" },
+                    { text: "Bihun & mee goreng.", value: "Char Koey Kak" },
+                    { text: "Mushroom soup with garlic bread.", value: "Popiah" },
+                    { text: "BBQ.", value: "Keropok Lekor" },
+                    { text: "Seafood.", value: "Vadai" },
+                    { text: "Snacks.", value: "Putu Mayam" },
+                    { text: "Ais Kacang.", value: "Tau Foo Fah" },
+                    { text: "Desserts (Kuihs, cakes, ice cream).", value: "Kuih Seri Muka" }
+                ]
+            },
+            {
+                question: "Which weather best describes your personality?",
+                options: [
+                    { text: "KL jam + super hot sun.", value: "Char Koey Kak" },
+                    { text: "Evening thunderstorm.", value: "Satay" },
+                    { text: "Cloudy like Cameron Highlands.", value: "Putu Mayam" },
+                    { text: "Humid like pasar malam.", value: "Popiah" },
+                    { text: "Monsoon season.", value: "Vadai" },
+                    { text: "Breezy like Pulau Redang.", value: "Tau Foo Fah" },
+                    { text: "Dry heat like Penang at 3PM.", value: "Karipap" },
+                    { text: "5 minutes rain, then hot like crazy again.", value: "Kuih Seri Muka" },
+                    { text: "Cold like rain before sunrise.", value: "Keropok Lekor" }
+                ]
+            },
+            {
+                question: "If you had a superpower, which one?",
+                options: [
+                    { text: "Teleport 100km in any direction in Malaysia.", value: "Karipap" },
+                    { text: "Get 1 extra piece everytime you buy food.", value: "Keropok Lekor" },
+                    { text: "Speak all Malaysian languages & dialects.", value: "Popiah" },
+                    { text: "Always have parking wherever you go.", value: "Putu Mayam" },
+                    { text: "Can control the weather (once a month).", value: "Kuih Seri Muka" },
+                    { text: "Have super stamina.", value: "Vadai" },
+                    { text: "Ability to summon food once a day.", value: "Satay" },
+                    { text: "Fly for 3 hours a day.", value: "Char Koey Kak" },
+                    { text: "Have super patience.", value: "Tau Foo Fah" }
+                ]
+            },
+            {
+                question: "Which music best describes you?",
+                options: [
+                    { text: "YouTube search '2000 - 2016' playlist.", value: "Popiah" },
+                    { text: "K-Drama OSTs ('You are my destiny') vibes.", value: "Tau Foo Fah" },
+                    { text: "J-Pop/Rock vibes.", value: "Karipap" },
+                    { text: "Remix only.", value: "Char Koey Kak" },
+                    { text: "Lagu Raya ('Balik Kampung') vibes.", value: "Satay" },
+                    { text: "Bollywood ('Tum Hi Ho') vibes.", value: "Vadai" },
+                    { text: "Sad love song ('Tong Hua') vibes.", value: "Putu Mayam" },
+                    { text: "Lagu patriotik ('Saya Anak Malaysia') vibes.", value: "Keropok Lekor" },
+                    { text: "Old chinese songs ('Wo De Hao Xiong Di') vibes.", value: "Kuih Seri Muka" }
+                ]
+            },
+            {
+                question: "Which pet would you adopt if you could?",
+                options: [
+                    { text: "Stray cat/dog.", value: "Popiah" },
+                    { text: "Farm chicken.", value: "Keropok Lekor" },
+                    { text: "Koi Fish.", value: "Kuih Seri Muka" },
+                    { text: "Breeded cat/dog.", value: "Satay" },
+                    { text: "Sugar Glider.", value: "Karipap" },
+                    { text: "Burung murai.", value: "Vadai" },
+                    { text: "Monitor lizard.", value: "Char Koey Kak" },
+                    { text: "Turtle.", value: "Tau Foo Fah" },
+                    { text: "Snakes.", value: "Putu Mayam" }
+                ]
+            },
+            {
+                question: "Which is your default response when you pay for something and the vendor says 'Thank You'?",
+                options: [
+                    { text: "'Thank you'", value: "Karipap" },
+                    { text: "'Ok, take care'", value: "Satay" },
+                    { text: "'Welcome'", value: "Keropok Lekor" },
+                    { text: "'I'll come again' (even if sometimes you dont mean it)", value: "Vadai" },
+                    { text: "Just smile and nod.", value: "Tau Foo Fah" },
+                    { text: "'Ok, bye' awkwardly.", value: "Char Koey Kak" },
+                    { text: "'Keep the change' (few cents? few ringgits?)", value: "Kuih Seri Muka" },
+                    { text: "Mumbles something that no one can hear.", value: "Popiah" },
+                    { text: "Makes a finger heart.", value: "Putu Mayam" }
+                ]
+            },
+            {
+                question: "What is your spice tolerance?",
+                options: [
+                    { text: "Eat roti canai with dhall only.", value: "Tau Foo Fah" },
+                    { text: "Maggi Kari, barely survive.", value: "Kuih Seri Muka" },
+                    { text: "Nasi lemak sambal normal spicy, but cry inside.", value: "Putu Mayam" },
+                    { text: "Can tahan ayam masak merah.", value: "Popiah" },
+                    { text: "Sambal belacan on everything.", value: "Vadai" },
+                    { text: "Nasi kandar kuah banjir.", value: "Satay" },
+                    { text: "Sour + spicy mala hotpot.", value: "Char Koey Kak" },
+                    { text: "Spicy korean ramen no problem.", value: "Karipap" },
+                    { text: "Eat raw cili padi as a snack.", value: "Keropok Lekor" }
+                ]
+            },
+            {
+                question: "Which is your favourite cartoon growing up?",
+                options: [
+                    { text: "Upin & Ipin.", value: "Keropok Lekor" },
+                    { text: "BoBoiBoy.", value: "Satay" },
+                    { text: "Doraemon.", value: "Tau Foo Fah" },
+                    { text: "Shin Chan.", value: "Char Koey Kak" },
+                    { text: "Wonder Pets.", value: "Kuih Seri Muka" },
+                    { text: "Spongebob Squarepants.", value: "Karipap" },
+                    { text: "Tom & Jerry.", value: "Popiah" },
+                    { text: "Sailor Moon.", value: "Putu Mayam" },
+                    { text: "Power Rangers.", value: "Vadai" }
+                ]
+            }
+        ];
+        
+            const foodResults = {
+                "Char Koey Kak": {
+                    name: "Char Koey Kak!",
+                    subtitle: "The spontaneous chaos",
+                    image: "quizimages/char_koey_kak.jpg", 
+                    description: "You're Char Koey Kak! You bring spontaneous chaos and excitement wherever you go. Your energetic and unpredictable nature makes life more interesting. People love your bold approach to life and your ability to turn any situation into an adventure!"
+                },
+                "Tau Foo Fah": {
+                    name: "Tau Foo Fah!",
+                    subtitle: "The soft hearted chill",
+                    image: "quizimages/tau_foo_fah.jpg", 
+                    description: "You're Tau Foo Fah! Soft-hearted and chill, you bring a calming presence to any situation. Your gentle nature and smooth approach to life make people feel comfortable around you. You're the friend everyone turns to for a soothing presence and good advice."
+                },
+                "Vadai": {
+                    name: "Vadai!",
+                    subtitle: "The loud social butterfly",
+                    image: "quizimages/vadai.jpg",
+                    description: "You're Vadai! The loud social butterfly who brings energy to any gathering. Your crispy exterior hides a soft heart, and you're always the life of the party. People are drawn to your vibrant personality and your ability to connect with anyone."
+                },
+                "Putu Mayam": {
+                    name: "Putu Mayam!",
+                    subtitle: "The quirky dreamer",
+                    image: "quizimages/putu_mayam.jpg",
+                    description: "You're Putu Mayam! A quirky dreamer with a unique perspective on life. Like the intricate patterns of putu mayam, you have many layers to your personality. You're creative, imaginative, and often lost in your own world of ideas and possibilities."
+                },
+                "Satay": {
+                    name: "Satay!",
+                    subtitle: "The Friendly Crowd-Pleaser",
+                    image: "quizimages/satay.jpg",
+                    description: "You're Satay! The friendly crowd-pleaser who brings people together. You're always at the center of social gatherings, making sure everyone is having a good time. Your warm and inviting nature makes you universally loved by all who meet you."
+                },
+                "Keropok Lekor": {
+                    name: "Keropok Lekor!",
+                    subtitle: "The Kampung Boy/Girl",
+                    image: "quizimages/keropok_lekor.jpg",
+                    description: "You're Keropok Lekor! The ultimate kampung boy/girl with simple tastes and a heart of gold. You enjoy life's simple pleasures and have a nostalgic charm about you. People appreciate your authenticity and down-to-earth nature."
+                },
+                "Popiah": {
+                    name: "Popiah!",
+                    subtitle: "The Practical All-Rounder",
+                    image: "quizimages/popiah.jpg", 
+                    description: "You're Popiah! The practical all-rounder who's well-prepared for any situation. Like a perfectly wrapped popiah, you have everything neatly organized. You're reliable, versatile, and always have a solution for any problem that comes your way."
+                },
+                "Karipap": {
+                    name: "Karipap!",
+                    subtitle: "The reliable and steady",
+                    image: "quizimages/karipap.jpg", 
+                    description: "You're Karipap! Reliable and steady, you're the rock that people depend on. Your crispy exterior protects a warm, comforting interior. You're always there when needed and provide a sense of security and comfort to those around you."
+                },
+                "Kuih Seri Muka": {
+                    name: "Kuih Seri Muka!",
+                    subtitle: "The Elegant Sweetheart",
+                    image: "quizimages/seri_muka.png",
+                    description: "You're Kuih Seri Muka! The elegant sweetheart with layers of charm and grace. Your beautiful exterior matches your sweet interior. You bring a touch of class and refinement to any situation, and people are drawn to your gentle and kind nature."
+                }
+            };
+        
+        let currentQuestion = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        
+        function loadProgress() {
+            const savedProgress = localStorage.getItem('foodQuizProgress');
+            if (savedProgress) {
+                const progress = JSON.parse(savedProgress);
+                currentQuestion = progress.currentQuestion;
+                userAnswers = progress.userAnswers;
+            }
+        }
+        
+        function saveProgress() {
+            const progress = {
+                currentQuestion: currentQuestion,
+                userAnswers: userAnswers
+            };
+            localStorage.setItem('foodQuizProgress', JSON.stringify(progress));
+        }
+        
+        function saveResult(result) {
+            const previousResults = JSON.parse(localStorage.getItem('foodQuizResults') || '[]');
+            previousResults.push({
+                date: new Date().toISOString(),
+                result: result
+            });
+            localStorage.setItem('foodQuizResults', JSON.stringify(previousResults));
+        }
+        
+        function clearProgress() {
+            localStorage.removeItem('foodQuizProgress');
+        }
+        
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            document.getElementById('question').textContent = question.question;
+            
+            const optionsContainer = document.getElementById('question-container');
+            const optionElements = optionsContainer.querySelectorAll('.quiz-option');
+            
+            optionElements.forEach((option, index) => {
+                const label = option.querySelector('.form-check-label');
+                label.textContent = question.options[index].text;
+                
+                const radio = option.querySelector('input');
+                radio.checked = (userAnswers[currentQuestion] === question.options[index].value);
+                
+                option.classList.toggle('selected', radio.checked);
+                option.setAttribute('data-value', question.options[index].value);
+            });
+            
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+            document.getElementById('total-questions').textContent = questions.length;
+            document.getElementById('quiz-progress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            
+            document.getElementById('prev-btn').disabled = (currentQuestion === 0);
+            
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('submit-quiz').style.display = 'block';
+            } else {
+                document.getElementById('next-btn').style.display = 'block';
+                document.getElementById('submit-quiz').style.display = 'none';
+            }
+            
+            saveProgress();
+        }
+        
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input');
+                radio.checked = true;
+                
+                document.querySelectorAll('.quiz-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                userAnswers[currentQuestion] = this.getAttribute('data-value');
+                
+                saveProgress();
+            });
+        });
+        
+        document.getElementById('next-btn').addEventListener('click', function() {
+            if (userAnswers[currentQuestion] === null) {
+                alert("Please select an answer before continuing.");
+                return;
+            }
+            
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            }
+        });
+        
+        document.getElementById('prev-btn').addEventListener('click', function() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        });
+        
+        document.getElementById('submit-quiz').addEventListener('click', function() {
+            if (userAnswers[currentQuestion] === null) {
+                alert("Please select an answer before submitting.");
+                return;
+            }
+            
+            const answerCount = {};
+            let maxCount = 0;
+            let resultFood = "Char Koey Kak"; 
+            
+            userAnswers.forEach(answer => {
+                if (answer) {
+                    answerCount[answer] = (answerCount[answer] || 0) + 1;
+                    if (answerCount[answer] > maxCount) {
+                        maxCount = answerCount[answer];
+                        resultFood = answer;
+                    }
+                }
+            });
+            
+            const result = foodResults[resultFood];
+            document.getElementById('quiz-result').style.display = 'block';
+            document.getElementById('question-container').closest('.card').style.display = 'none';
+            
+            document.getElementById('result-food').textContent = result.name;
+            document.getElementById('result-subtitle').textContent = result.subtitle;
+            document.getElementById('result-image').src = result.image;
+            document.getElementById('result-description').textContent = result.description;
+            
+            saveResult(resultFood);
+            clearProgress();
+        });
+        
+        document.getElementById('retry-quiz').addEventListener('click', function() {
+            currentQuestion = 0;
+            userAnswers = new Array(questions.length).fill(null);
+            
+            document.getElementById('quiz-result').style.display = 'none';
+            document.getElementById('question-container').closest('.card').style.display = 'block';
+            
+            loadQuestion();
+        });
+        
+        document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const platform = this.getAttribute('data-platform');
+                const result = document.getElementById('result-food').textContent;
+                const subtitle = document.getElementById('result-subtitle').textContent;
+                
+                let shareText = `I got ${result} - ${subtitle} in the Malaysian Street Food Quiz!`;
+                
+                if (platform === 'twitter') {
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank');
+                } else if (platform === 'facebook') {
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`, '_blank');
+                } else if (platform === 'whatsapp') {
+                    window.open(`https://wa.me/?text=${encodeURIComponent(shareText)}`, '_blank');
+                } else if (platform === 'copy') {
+                    navigator.clipboard.writeText(shareText).then(function() {
+                        const toast = document.getElementById('toast');
+                        toast.textContent = 'Result copied to clipboard!';
+                        toast.classList.add('show');
+                        
+                        setTimeout(function() {
+                            toast.classList.remove('show');
+                        }, 2000);
+                    }).catch(function(err) {
+                        console.error('Could not copy text: ', err);
+                        alert('Failed to copy to clipboard. Please try again.');
+                    });
+                }
+            });
+        });
+        
+        function checkLocalStorage() {
+            try {
+                const test = 'test';
+                localStorage.setItem(test, test);
+                localStorage.removeItem(test);
+                return true;
+            } catch(e) {
+                return false;
+            }
+        }
+        
+        if (checkLocalStorage()) {
+            loadProgress();
+        } else {
+            document.getElementById('storage-indicator').style.display = 'none';
+        }
+        
+        loadQuestion();
+    </script>
+</body>
+</html>

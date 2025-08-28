@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Global Street Food</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #D16002;
+            --secondary-color: #ffc107;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            background: #f8f9fa;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-toggler {
+            border: none;
+            color: white !important;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #b45302;
+            border-color: #b45302;
+        }
+
+        .btn-link.text-dark {
+            color: var(--primary-color) !important;
+        }
+
+        .btn-link.text-dark:hover {
+            color: #b45302 !important;
+            text-decoration: underline;
+        }
+
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+                url('https://images.unsplash.com/photo-1551782450-17144efb9c50?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 150px 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-explore {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+        }
+
+        .btn-explore:hover {
+            background-color: #b45302;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .flags-section {
+            background-color: white;
+            padding: 60px 0;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .flags-container {
+            display: flex;
+            width: 200%;
+            animation: moveFlags 40s linear infinite;
+        }
+
+        .flag-item {
+            margin: 0 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 120px;
+        }
+
+        .flag {
+            width: 80px;
+            height: 60px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.3s;
+        }
+
+        .flag:hover {
+            transform: scale(1.1);
+        }
+
+        .country-name {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        @keyframes moveFlags {
+            0% {
+                transform: translateX(-50%);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        .story-mission {
+            padding: 80px 0;
+            background-color: white;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary-color);
+        }
+
+        .mission-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, #fcecd9, #ffffff);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .btn-learn-more {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 50px;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-learn-more:hover {
+            background-color: #b45302;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .instagram-section {
+            padding: 80px 0;
+            background-color: #f9f5f0;
+        }
+
+        .ig-post {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+
+        .ig-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .ig-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+
+        .ig-content {
+            padding: 20px;
+            position: relative;
+        }
+
+        .ig-date {
+            font-size: 0.85rem;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .ig-caption {
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .ig-link {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .ig-link:hover {
+            color: #b45302;
+            text-decoration: underline;
+        }
+
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 5%;
+            opacity: 0.7;
+        }
+
+        .carousel-control-prev:hover,
+        .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+        .contact-section {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .contact-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .contact-info {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: var(--secondary-color);
+        }
+
+        .email-form-container {
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .form-input {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 15px;
+        }
+
+        .form-submit {
+            width: 100%;
+            text-align: center;
+        }
+
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cookie-consent p {
+            margin: 0;
+            padding-right: 20px;
+            flex: 1;
+        }
+
+        .cookie-consent button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .cookie-consent button:hover {
+            background-color: #b45302;
+        }
+
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .flag {
+                width: 60px;
+                height: 45px;
+            }
+
+            .form-input {
+                min-width: 100%;
+            }
+
+            .ig-image {
+                height: 200px;
+            }
+
+            .cookie-consent {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .cookie-consent p {
+                padding-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .navbar-nav .nav-link {
+                margin: 0 0.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="cookie-consent" id="cookieConsent" style="display: none;">
+        <p>We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+        <button id="acceptCookies">Accept</button>
+    </div>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #D16002; padding: 0.8rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" style="font-weight: 700; font-size: 1.5rem; color: white !important;">
+                <i class="fas fa-utensils me-2"></i>Streets of Food
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html" style="color: white !important; background-color: #A54D00; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="About.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Malaysia.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Malaysia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Global.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Global</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Event.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Recipe.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Quiz.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Team.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Team.html#feedbackSection" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Discover Street Food Adventures</h1>
+            <p class="hero-subtitle">Explore the most delicious street foods from Malaysia and around the world</p>
+            <a href="#story-mission" class="btn btn-explore">Start Exploring</a>
+        </div>
+    </section>
+
+    <section class="flags-section">
+        <div class="flags-container">
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/th.png')"></div>
+                <div class="country-name">Thailand</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/vn.png')"></div>
+                <div class="country-name">Vietnam</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/id.png')"></div>
+                <div class="country-name">Indonesia</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/in.png')"></div>
+                <div class="country-name">India</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/cn.png')"></div>
+                <div class="country-name">China</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/jp.png')"></div>
+                <div class="country-name">Japan</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/kr.png')"></div>
+                <div class="country-name">Korea</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/mx.png')"></div>
+                <div class="country-name">Mexico</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/tr.png')"></div>
+                <div class="country-name">Turkey</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/gr.png')"></div>
+                <div class="country-name">Greece</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/it.png')"></div>
+                <div class="country-name">Italy</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/es.png')"></div>
+                <div class="country-name">Spain</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/fr.png')"></div>
+                <div class="country-name">France</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/us.png')"></div>
+                <div class="country-name">USA</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/ph.png')"></div>
+                <div class="country-name">Philippines</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/de.png')"></div>
+                <div class="country-name">Germany</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/sg.png')"></div>
+                <div class="country-name">Singapore</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/br.png')"></div>
+                <div class="country-name">Brazil</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/ca.png')"></div>
+                <div class="country-name">Canada</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/my.png')"></div>
+                <div class="country-name">Malaysia</div>
+            </div>
+
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/th.png')"></div>
+                <div class="country-name">Thailand</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/vn.png')"></div>
+                <div class="country-name">Vietnam</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/id.png')"></div>
+                <div class="country-name">Indonesia</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/in.png')"></div>
+                <div class="country-name">India</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/cn.png')"></div>
+                <div class="country-name">China</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/jp.png')"></div>
+                <div class="country-name">Japan</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/kr.png')"></div>
+                <div class="country-name">Korea</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/mx.png')"></div>
+                <div class="country-name">Mexico</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/tr.png')"></div>
+                <div class="country-name">Turkey</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/gr.png')"></div>
+                <div class="country-name">Greece</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/it.png')"></div>
+                <div class="country-name">Italy</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/es.png')"></div>
+                <div class="country-name">Spain</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/fr.png')"></div>
+                <div class="country-name">France</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/us.png')"></div>
+                <div class="country-name">USA</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/ph.png')"></div>
+                <div class="country-name">Philippines</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/de.png')"></div>
+                <div class="country-name">Germany</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/sg.png')"></div>
+                <div class="country-name">Singapore</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/br.png')"></div>
+                <div class="country-name">Brazil</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/ca.png')"></div>
+                <div class="country-name">Canada</div>
+            </div>
+            <div class="flag-item">
+                <div class="flag" style="background-image: url('aboutfood/my.png')"></div>
+                <div class="country-name">Malaysia</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="story-mission" id="story-mission">
+        <div class="container">
+            <h2 class="section-title">About</h2>
+            <div class="mission-content">
+                <p>Streets of Food began as a simple passion project among a group of friends who loved to travel and
+                    explore street food. What started as a photo album to share our culinary adventures quickly evolved
+                    into a mission to document and share the most authentic street food experiences from around the
+                    world.</p>
+                <p>From the night markets of Malaysia to the food trucks of Mexico City, we've captured hundreds of
+                    dishes, always focusing on authenticity, flavor, and the stories behind the food.</p>
+                <p>Our mission is to preserve and promote street food culture across the globe. We believe that some of
+                    the most genuine culinary experiences don't happen in high-end restaurants but on bustling street
+                    corners, where recipes passed down through generations tell the story of a culture.</p>
+                <a href="About.html" class="btn btn-learn-more">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="weather-section py-5" style="background-color:#fff;">
+        <div class="container text-center">
+            <h2 class="section-title">Check Weather</h2>
+            <div class="mb-3">
+                <input type="text" id="countryInput" class="form-control d-inline-block" placeholder="Enter a country" style="max-width:300px;">
+                <button id="getWeather" class="btn btn-primary ms-2">Get Weather</button>
+            </div>
+            <p id="weatherResult" class="mt-3" style="font-size:1.2rem;"></p>
+        </div>
+    </section>
+
+    <section class="instagram-section">
+        <div class="container">
+            <h2 class="section-title">Latest from Instagram</h2>
+            <p class="text-center mb-5">Follow our culinary journey around the world</p>
+            
+            <div id="instagramCarousel" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner" id="instagramPosts">
+                    <div class="text-center py-5">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                        <p class="mt-3">Loading Instagram posts...</p>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#instagramCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#instagramCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <h2 class="contact-title">Get in Touch</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope contact-icon"></i> info@streetneats.com</p>
+                        <p><i class="fas fa-phone contact-icon"></i> +60 123456789 </p>
+                        <p><i class="fas fa-map-marker-alt contact-icon"></i> 123 Food Street, Jalan Universiti, 31900
+                            Kampar, Perak</p>
+                    </div>
+                </div>
+
+    <div class="email-form-container text-center p-4 rounded">
+        <h5 class="mb-3 text-white">Follow us on social media for updates!</h5>
+
+        <div id="fb-root"></div>
+        <div class="fb-page"
+             data-href="https://www.facebook.com/penangfoodie" 
+             data-tabs="timeline" 
+             data-width="380" 
+             data-height="130" 
+             data-small-header="false" 
+             data-adapt-container-width="true" 
+             data-hide-cover="false" 
+             data-show-facepile="true">
+        </div>
+        <br><br>
+
+<script async defer crossorigin="anonymous"
+        src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v16.0">
+</script>
+                <div class="email-form-container text-center p-4 rounded">
+                    <h5 class="mb-3 text-white">Follow us on social media for updates!</h5>
+                    <div class="d-flex justify-content-center">
+                        <a href="https://www.instagram.com/streetsof_food/?next=%2Fstreetsof_food%2F" target="_blank"
+                            class="btn btn-warning btn-lg">
+                            <i class="fab fa-facebook-f me-2"></i> Visit Our Instagram Page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function setCookie(name, value, days) {
+            const d = new Date();
+            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + d.toUTCString();
+            document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        $(document).ready(function () {
+            if (!getCookie('cookieConsent')) {
+                $('#cookieConsent').show();
+            }
+
+            $('#acceptCookies').click(function() {
+                setCookie('cookieConsent', 'accepted', 365);
+                $('#cookieConsent').hide();
+            });
+
+            $('a[href^="#"]').on('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            loadInstagramPosts();
+        });
+
+        function loadInstagramPosts() {
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; 
+            const instagramUrl = 'https://www.instagram.com/streetsof_food/?__a=1';
+            
+            $.ajax({
+                url: proxyUrl + instagramUrl,
+                method: 'GET',
+                success: function(response) {
+                    console.log('Instagram response:', response);
+                    
+                    displayFallbackInstagramPosts();
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching Instagram posts:', error);
+                    displayFallbackInstagramPosts();
+                }
+            });
+        }
+
+        function displayFallbackInstagramPosts() {
+            
+            const postsHtml = `
+            
+                <div class="carousel-item active">
+                    <div class="row g-4">
+                        <!-- Post 1 -->
+                        <div class="col-md-4">
+                            <div class="ig-post">
+                                <img src="aboutfood/shawarmajpeg.jpeg" alt="Instagram Post" class="ig-image">
+                                <div class="ig-content">
+                                    <div class="ig-date">Posted: August 29, 2025</div>
+                                    <p class="ig-caption">Shawarma – A flavor-packed bite in every wrap!</p>
+                                    <a href="https://www.instagram.com/p/DN6E-n3EuZp/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="ig-link">View on Instagram <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post 2 -->
+                        <div class="col-md-4">
+                            <div class="ig-post">
+                                <img src="aboutfood/chaat.jpg" alt="Instagram Post" class="ig-image">
+                                <div class="ig-content">
+                                    <div class="ig-date">Posted: August 29, 2025</div>
+                                    <p class="ig-caption">The magic of Indian street food, all in one dish!</p>
+                                    <a href="https://www.instagram.com/p/DN6Eqs-klLV/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==" target="_blank" class="ig-link">View on Instagram <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post 3 -->
+                        <div class="col-md-4">
+                            <div class="ig-post">
+                                <img src="aboutfood/padthaijpg.jpg" alt="Instagram Post" class="ig-image">
+                                <div class="ig-content">
+                                    <div class="ig-date">Posted: August 29, 2025</div>
+                                    <p class="ig-caption">Every bite is pure Thai authenticity!</p>
+                                    <a href="https://www.instagram.com/streetsof_food/" target="_blank" class="ig-link">View on Instagram <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="row g-4">
+                        <!-- Post 4 -->
+                        <div class="col-md-4">
+                            <div class="ig-post">
+                                <img src="aboutfood/ig2.jpg" alt="Instagram Post" class="ig-image">
+                                <div class="ig-content">
+                                    <div class="ig-date">Posted: August 29, 2025</div>
+                                    <p class="ig-caption">Cendoi brings you the true taste of Malaysia’s streets.</p>
+                                    <a href="https://www.instagram.com/p/DN5_BKjEt23/?utm_source=ig_web_copy_link" target="_blank" class="ig-link">View on Instagram <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Post 5 -->
+                        <div class="col-md-4">
+                            <div class="ig-post">
+                                <img src="aboutfood/ig.jpg" alt="Instagram Post" class="ig-image">
+                                <div class="ig-content">
+                                    <div class="ig-date">Posted: August 29, 2025</div>
+                                    <p class="ig-caption">Tender, juicy skewers grilled to perfection, dipped in our secret homemade peanut sauce.</p>
+                                    <a href="https://www.instagram.com/p/DN5sZ4TErDb/?utm_source=ig_web_copy_link" target="_blank" class="ig-link">View on Instagram <i class="fas fa-arrow-right ms-1"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            $('#instagramPosts').html(postsHtml);
+        }
+
+        
+    </script>
+    <script>
+function setCookie(name, value, days) {
+    const d = new Date();
+    d.setTime(d.getTime() + (days*24*60*60*1000));
+    document.cookie = `${name}=${encodeURIComponent(value)};expires=${d.toUTCString()};path=/`;
+}
+function getCookie(name) {
+    const nameEQ = name + "=";
+    const ca = document.cookie.split(';');
+    for(let i=0;i<ca.length;i++) {
+        let c = ca[i].trim();
+        if(c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length));
+    }
+    return null;
+}
+
+$(document).ready(function() {
+    let savedWeather = localStorage.getItem("lastWeather");
+    if(!savedWeather) savedWeather = getCookie("lastWeather");
+
+    if(savedWeather) {
+        const w = JSON.parse(savedWeather);
+        $("#weatherResult").text(`Current weather in ${w.country}: ${w.weather}`);
+        $("#countryInput").val(w.country);
+    }
+
+    $("#getWeather").click(function() {
+        const country = $("#countryInput").val().trim();
+        if(!country) {
+            $("#weatherResult").text("Please enter a country name.");
+            return;
+        }
+
+        $.getJSON(`https://wttr.in/${country}?format=j1`, function(data){
+            const current = data.current_condition[0];
+            const weather = `${current.temp_C}°C, ${current.weatherDesc[0].value}`;
+
+            $("#weatherResult").text(`Current weather in ${country}: ${weather}`);
+
+            localStorage.setItem("lastWeather", JSON.stringify({country:country, weather:weather}));
+
+            setCookie("lastWeather", JSON.stringify({country:country, weather:weather}), 7);
+        }).fail(function(){
+            $("#weatherResult").text("Could not fetch weather data. Try another country.");
+        });
+    });
+});
+</script>
+
+</body>
+
+</html>

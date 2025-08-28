@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Upcoming Food Street Events</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    :root {
+      --primary-color: #D16002;
+      --primary-dark: #A54D00;
+      --primary-light: #FF8C42;
+      --light-bg: #FFF5EB;
+    }
+    
+    .navbar-nav .nav-link:hover {
+      color: white !important;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+        
+    .navbar-toggler {
+      border: none;
+      color: white !important;
+    }
+        
+    .navbar-toggler:focus {
+      box-shadow: none;
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      border-color: var(--primary-dark);
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+    
+    .text-primary {
+      color: var(--primary-color) !important;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      padding-top: 0;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    header {
+      background: linear-gradient(to right, #D16002, #FF8C42);
+      color: white;
+      padding: 15px 0;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    
+    .logo span {
+      color: #FFE8D6;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin: 30px 0;
+      color: #D16002;
+      font-size: 32px;
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: #D16002;
+      margin: 10px auto;
+      border-radius: 2px;
+    }
+    
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 25px;
+      margin-bottom: 50px;
+    }
+    
+    .event-card {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 20px;
+    }
+    
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .event-content h3 {
+      color: #D16002;
+      margin-bottom: 10px;
+      font-size: 22px;
+    }
+    
+    .event-location, .event-date {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      color: #666;
+    }
+    
+    .event-location i, .event-date i {
+      margin-right: 8px;
+      color: #D16002;
+    }
+    
+    .event-desc {
+      margin: 15px 0;
+      color: #444;
+    }
+    
+    .weather-info {
+      display: flex;
+      align-items: center;
+      padding: 10px 15px;
+      background: #f8f8f8;
+      border-radius: 8px;
+      margin-top: 15px;
+    }
+    
+    .weather-icon {
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+    
+    .weather-details {
+      flex: 1;
+    }
+    
+    .temperature {
+      font-size: 20px;
+      font-weight: bold;
+      color: #D16002;
+    }
+    
+    .weather-desc {
+      text-transform: capitalize;
+      color: #666;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      background: #D16002;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease;
+      margin-top: 15px;
+    }
+    
+    .btn:hover {
+      background: #b45302;
+    }
+    
+    /* Interested Section */
+    .interested-section {
+      margin-top: 50px;
+      padding: 20px;
+      background: #fff3e6;
+      border-radius: 15px;
+    }
+    
+    .interested-item {
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      margin: 8px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .remove-btn {
+      background: #D16002;
+      border: none;
+      padding: 5px 10px;
+      color: white;
+      border-radius: 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    
+    footer {
+      background: #333;
+      color: white;
+      padding: 30px 0 15px;
+      text-align: center;
+      margin-top: 50px;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .footer-logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    
+    .footer-links a {
+      color: #ddd;
+      margin: 0 10px;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: #D16002;
+    }
+    
+    .copyright {
+      color: #aaa;
+      font-size: 14px;
+    }
+    
+    @media (max-width: 768px) {
+      .header-content {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .navbar-nav .nav-link {
+            margin: 0 0.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #D16002; padding: 0.8rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <div class="container">
+        <a class="navbar-brand" href="index.html" style="font-weight: 700; font-size: 1.5rem; color: white !important;">
+            <i class="fas fa-utensils me-2"></i>Streets of Food
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="About.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Malaysia.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Malaysia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Global.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Global</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Event.html" style="color: white !important; background-color: #A54D00; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Recipe.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Recipe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Quiz.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Team.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Team.html#feedbackSection" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Feedback</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+  <section class="container">
+    <h2 class="section-title">Upcoming Food Street Events</h2>
+    
+    <div class="events-grid">
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Foodicious+Food+%26+Beverage+Expo&dates=20251003T020000Z/20251005T100000Z&details=Premier+F%26B+expo+featuring+numerous+local+vendors&location=Sunshine+Central,+Penang" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Foodicious Food & Beverage Expo</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Sunshine Central, Penang</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Oct 3–5, 2025</span>
+          </div>
+          <p class="event-desc">Premier F&B expo featuring numerous local vendors.</p>
+          <div class="weather-info">
+            <img id="weather-icon-penang" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-penang">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-penang">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://foodicious.com.my/food-events-malaysia" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('Foodicious Food & Beverage Expo', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tastefully+Food+Expo+Kota+Kinabalu&dates=20251003T020000Z/20251005T100000Z&details=Part+of+the+multi-city+Tastefully+expo+series&location=Kota+Kinabalu,+Sabah" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Tastefully Food Expo (Kota Kinabalu)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Kota Kinabalu, Sabah</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Oct 3–5, 2025</span>
+          </div>
+          <p class="event-desc">Part of a multi-city "Tastefully" expo series.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kk" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kk">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kk">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://www.tastefullyexpo.com" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('Tastefully Food Expo (Kota Kinabalu)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tastefully+Food+Expo+Kuala+Lumpur&dates=20251107T020000Z/20251109T100000Z&details=Another+installment+of+the+consumer-facing+Tastefully+expo+series&location=Mid+Valley,+Kuala+Lumpur" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Tensefully Food Expo (Kuala Lumpur)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Mid Valley, Kuala Lumpur</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Nov 7–9, 2025</span>
+          </div>
+          <p class="event-desc">Another installment of the consumer-facing expo series.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kl" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kl">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kl">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://10times.com/malaysia/food-beverage" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('Tastefully Food Expo (Kuala Lumpur)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Tastefully+Food+Expo+Johor+Bahru&dates=20251219T020000Z/20251221T100000Z&details=Southern+edition+of+the+Tastefully+expo+series&location=Mid+Valley+SouthKey,+Johor+Bahru" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Tastefully Food Expo (Johor Bahru)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Mid Valley SouthKey, Johor Bahru</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Dec 19–21, 2025</span>
+          </div>
+          <p class="event-desc">Expanding the series to the southern region.</p>
+          <div class="weather-info">
+            <img id="weather-icon-jb" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-jb">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-jb">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://10times.com/malaysia/food-beverage" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('Tastefully Food Expo (Johor Bahru)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=TLM+Food+Expo+Penang&dates=20251017T020000Z/20251019T100000Z&details=Leading+regional+food+expo+with+broad+participation&location=SPICE+Arena,+George+Town,+Penang" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>TLM Food Expo (Penang)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>SPICE Arena, George Town, Penang</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Oct 17–19, 2025</span>
+          </div>
+          <p class="event-desc">Leading regional food expo with broad participation.</p>
+          <div class="weather-info">
+            <img id="weather-icon-penang2" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-penang2">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-penang2">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://10times.com/malaysia/food-beverage" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('TLM Food Expo (Penang)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=iFood+Expo+Ipoh&dates=20251106T020000Z/20251109T100000Z&details=Malaysia’s+largest+consumer-focused+F%26B+expo&location=Stadium+Indera+Mulia,+Ipoh" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>iFood Expo (Ipoh)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Stadium Indera Mulia, Ipoh</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Nov 6–9, 2025</span>
+          </div>
+          <p class="event-desc">Malaysia's largest consumer-focused F&B expo, perfect for food lovers.</p>
+          <div class="weather-info">
+            <img id="weather-icon-ipoh" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-ipoh">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-ipoh">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://www.ifoodexpo.com.my" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('iFood Expo (Ipoh)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=iFood+Expo+Kuala+Lumpur&dates=20251212T020000Z/20251214T100000Z&details=Continuation+of+the+iFood+Expo+series&location=Pavilion+Bukit+Jalil,+Kuala+Lumpur" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>iFood Expo (Kuala Lumpur)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Pavilion Bukit Jalil, Kuala Lumpur</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Dec 12–14, 2025</span>
+          </div>
+          <p class="event-desc">Continuation of the iFood series.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kl2" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kl2">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kl2">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://www.ifoodexpo.com.my" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('iFood Expo (Kuala Lumpur)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=iFood+Expo+Mid+Valley+Kuala+Lumpur&dates=20260102T020000Z/20260104T100000Z&details=Early+2026+edition+of+the+iFood+Expo+series&location=Mid+Valley+Exhibition+Centre,+Kuala+Lumpur" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>iFood Expo (Mid Valley)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Mid Valley Exhibition Centre, Kuala Lumpur</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Jan 2–4, 2026</span>
+          </div>
+          <p class="event-desc">Early 2026 edition of the same expo.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kl3" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kl3">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kl3">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://www.ifoodexpo.com.my" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('iFood Expo (Mid Valley)', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Food+Show+Malaysia&dates=20260324T020000Z/20260326T100000Z&details=Premier+F%26B+exhibition+with+an+industry+focus&location=World+Trade+Centre,+Kuala+Lumpur" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Food Show Malaysia</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>World Trade Centre (WTC), Kuala Lumpur</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Mar 24–26, 2026</span>
+          </div>
+          <p class="event-desc">Premier F&B exhibition with industry focus.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kl4" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kl4">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kl4">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://www.foodshowmalaysia.com" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('Food Show Malaysia', this)">I'm Interested</button>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Malaysian+International+F%26B+Trade+Fair+(MIFB)&dates=20260715T020000Z/20260717T100000Z&details=Large+B2B+trade+expo+for+F%26B+industry+professionals&location=Kuala+Lumpur" target="_blank" class="btn">Set Reminder</a>
+        <div class="event-content">
+          <h3>Malaysian International F&B Trade Fair (MIFB)</h3>
+          <div class="event-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Kuala Lumpur</span>
+          </div>
+          <div class="event-date">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Jul 15–17, 2026</span>
+          </div>
+          <p class="event-desc">Large B2B trade expo for F&B industry professionals.</p>
+          <div class="weather-info">
+            <img id="weather-icon-kl5" src="" alt="Weather Icon" class="weather-icon">
+            <div class="weather-details">
+              <div class="temperature"><span id="temp-kl5">Loading...</span></div>
+              <div class="weather-desc"><span id="desc-kl5">Weather information</span></div>
+            </div>
+          </div>
+          <a href="https://10times.com/malaysia/food-beverage" target="_blank" class="btn">Visit Website</a>
+          <button class="btn" onclick="markInterested('MIFB', this)">I'm Interested</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="interested-section">
+      <h3>⭐ My Interested Events</h3>
+      <div id="interestedList">
+        <p class="text-muted">No events added yet. Click "I'm Interested" to save events here!</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="copyright">
+          &copy; 2025 Streets of Food. All rights reserved.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const apiKey = "89be7c3e00f39fbf7566fea6c888e8bc";
+
+    async function loadWeather(city, tempId, descId, iconId) {
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${apiKey}&units=metric`;
+      
+      try {
+        let response = await fetch(url);
+        let data = await response.json();
+        
+        if (data.cod === 200) {
+          const temp = Math.round(data.main.temp);
+          const desc = data.weather[0].description;
+          const icon = data.weather[0].icon;
+          const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
+          
+          document.getElementById(tempId).textContent = `${temp}°C`;
+          document.getElementById(descId).textContent = desc;
+          document.getElementById(iconId).src = iconUrl;
+        } else {
+          document.getElementById(tempId).textContent = "Unavailable";
+          document.getElementById(descId).textContent = "Weather data unavailable";
+        }
+      } catch (error) {
+        document.getElementById(tempId).textContent = "Unavailable";
+        document.getElementById(descId).textContent = "Weather data unavailable";
+      }
+    }
+
+    function markInterested(eventName, btn) {
+      let interested = JSON.parse(sessionStorage.getItem("interestedEvents")) || [];
+      if (!interested.includes(eventName)) {
+        interested.push(eventName);
+        sessionStorage.setItem("interestedEvents", JSON.stringify(interested));
+        renderInterested();
+        btn.textContent = "Added ✓";
+        btn.disabled = true;
+      }
+    }
+
+    function removeInterested(eventName) {
+      let interested = JSON.parse(sessionStorage.getItem("interestedEvents")) || [];
+      interested = interested.filter(e => e !== eventName);
+      sessionStorage.setItem("interestedEvents", JSON.stringify(interested));
+      renderInterested();
+      
+      const buttons = document.querySelectorAll(".btn");
+      buttons.forEach(btn => {
+        if (btn.textContent === "Added ✓" && btn.getAttribute("onclick").includes(eventName)) {
+          btn.textContent = "I'm Interested";
+          btn.disabled = false;
+        }
+      });
+    }
+
+    function renderInterested() {
+      let interested = JSON.parse(sessionStorage.getItem("interestedEvents")) || [];
+      let list = document.getElementById("interestedList");
+      list.innerHTML = "";
+      
+      if (interested.length === 0) {
+        list.innerHTML = '<p class="text-muted">No events added yet. Click "I\'m Interested" to save events here!</p>';
+      } else {
+        interested.forEach(event => {
+          let item = document.createElement("div");
+          item.className = "interested-item";
+          item.innerHTML = "⭐ " + event + 
+            '<button class="remove-btn" onclick="removeInterested(\'' + event + '\')">Remove</button>';
+          list.appendChild(item);
+        });
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadWeather("Kuala Lumpur", "temp-kl", "desc-kl", "weather-icon-kl");
+      loadWeather("George Town, MY", "temp-penang", "desc-penang", "weather-icon-penang");
+      loadWeather("Johor Bahru, MY", "temp-jb", "desc-jb", "weather-icon-jb");
+      loadWeather("Kota Kinabalu, MY", "temp-kk", "desc-kk", "weather-icon-kk");
+      loadWeather("Melaka, MY", "temp-melaka", "desc-melaka", "weather-icon-melaka");
+      loadWeather("Ipoh, MY", "temp-ipoh", "desc-ipoh", "weather-icon-ipoh");
+      loadWeather("Kuching, MY", "temp-kuching", "desc-kuching", "weather-icon-kuching");
+      loadWeather("Kuala Terengganu, MY", "temp-trg", "desc-trg", "weather-icon-trg");
+      
+      renderInterested();
+    });
+  </script>
+</body>
+</html>

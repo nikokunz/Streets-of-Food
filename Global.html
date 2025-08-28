@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Street Food Exploration</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.0.0/css/flag-icons.min.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    
+        .navbar-toggler {
+            border: none;
+            color: white !important;
+        }
+    
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            margin-bottom: 20px;
+            background-color: #fde8d8; 
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .card-img-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            background-color: #f0f0f0;
+            background-image: linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .price-tag {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #fc0101; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .food-title {
+            font-weight: 700;
+            color: #2d334a;
+            font-size: 1.2rem;
+        }
+        .food-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background-color: #f8f3eb; 
+            border-radius: 0 0 15px 15px;
+        }
+        .food-details.show {
+            max-height: 1000px;
+        }
+        .like-btn {
+            color: #000000;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .like-btn.active {
+            color: #d70000; 
+        }
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #D16002;
+        }
+        .hero-section {
+            background: url('gbfoodimages/street_food_background.png') center/cover no-repeat;
+            padding: 100px 0;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .hero-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        .image-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transform: translateY(-50%);
+            padding: 0 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card:hover .image-nav {
+            opacity: 1;
+        }
+        .image-nav button {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .toggle-details {
+            color: #D16002 !important;
+            border-color: #D16002 !important;
+        }
+        .toggle-details:hover {
+            background-color: #D16002 !important;
+            color: white !important;
+        }
+        
+        .hero-content .form-select {
+            max-width: 400px; 
+            margin: 20px auto 0;
+            border: none;
+            padding: 10px 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .share-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .share-btn {
+            font-size: 1.2rem;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: transform 0.2s;
+            background-color: #D16002;
+            border: none;
+            cursor: pointer;
+        }
+        .share-btn:hover {
+            background-color: #ac4e02;
+            transform: scale(1.05);
+        }
+        #controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .spinner-border {
+            width: 3rem;
+            height: 3rem;
+            color: #D16002 !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #D16002; padding: 0.8rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <div class="container">
+            <a class="navbar-brand" href="index.html" style="font-weight: 700; font-size: 1.5rem; color: white !important;">
+                <i class="fas fa-utensils me-2"></i>Streets of Food
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="About.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Malaysia.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Malaysia</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="Global.html" style="color: white !important; background-color: #A54D00; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Global</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Event.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Recipe.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Recipe</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Quiz.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Quiz</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Team.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Team.html#feedbackSection" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Feedback</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="container">
+                <h1 class="display-4 fw-bold">Explore Global Street Food</h1>
+                <p class="lead">Discover authentic flavors from around the world.</p>
+                <div id="controls">
+                    <select id="cuisineSelect" class="form-select">
+                        <option value="">All Cuisines</option>
+                        <option value="African">African</option>
+                        <option value="Asian">Asian</option>
+                        <option value="British">British</option>
+                        <option value="Cajun">Cajun</option>
+                        <option value="Chinese">Chinese</option>
+                        <option value="European">European</option>
+                        <option value="French">French</option>
+                        <option value="German">German</option>
+                        <option value="Greek">Greek</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Irish">Irish</option>
+                        <option value="Italian">Italian</option>
+                        <option value="Japanese">Japanese</option>
+                        <option value="Korean">Korean</option>
+                        <option value="Latin American">Latin American</option>
+                        <option value="Mediterranean">Mediterranean</option>
+                        <option value="Mexican">Mexican</option>
+                        <option value="Middle Eastern">Middle Eastern</option>
+                        <option value="Spanish">Spanish</option>
+                        <option value="Thai">Thai</option>
+                        <option value="Vietnamese">Vietnamese</option>
+                    </select>
+                    <button id="myFavoritesBtn" class="btn btn-outline-light d-flex align-items-center">
+                        <i class="fas fa-heart me-2"></i>My Favorites
+                    </button>
+                    <button id="viewAllBtn" class="btn btn-outline-light d-none align-items-center">
+                        View All Foods
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <section id="global" class="my-5">
+            <h2 class="section-title" id="food-section-title">Global Street Food</h2>
+            <div class="row" id="food-container">
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   <script>
+    const API_KEY = 'e0378ac2e4ae40fdbe7ffc5e3558c54b'; 
+
+    const localFoods = [
+       {
+        id: 1,
+        title: "Taco",
+        cuisine: "Mexican",
+        flag: "fi-mx", 
+        price: "$ 2-5",
+        images: [
+            "gbfoodimages/taco1.jpg",
+            "gbfoodimages/taco2.jpg",
+            "gbfoodimages/taco3.jpg"
+        ],
+        summary: "Tacos are a traditional Mexican street food, made with corn or flour tortillas filled with meat, vegetables, and salsa. They're portable, flavorful, and a staple of Mexico’s vibrant street food culture."
+    },
+    {
+        id: 2,
+        title: "Takoyaki",
+        cuisine: "Japanese",
+        flag: "fi-jp", 
+        price: "¥ 400-600 (per 6 pcs)",
+        images: [
+            "gbfoodimages/takoyaki1.jpg",
+            "gbfoodimages/takoyaki2.jpg"
+        ],
+        summary: "Takoyaki are ball-shaped Japanese street snacks made of a wheat flour-based batter filled with diced octopus, tempura scraps, pickled ginger, and green onions, cooked in a special molded pan."
+    },
+    {
+        id: 3,
+        title: "Churros",
+        cuisine: "Spanish",
+        flag: "fi-es", 
+        price: "€ 2-5",
+        images: [
+            "gbfoodimages/churros1.jpg",
+            "gbfoodimages/churros2.jpg"
+        ],
+        summary: "Churros are a popular Spanish street snack made from fried dough, often sprinkled with sugar and served with a cup of hot chocolate for dipping."
+    },
+    {
+        id: 4,
+        title: "Hot Dog",
+        cuisine: "American",
+        flag: "fi-us", 
+        price: "$ 2-6",
+        images: [
+            "gbfoodimages/hotdog1.jpg",
+            "gbfoodimages/hotdog2.jpg"
+        ],
+        summary: "Hot dogs are one of the most iconic American street foods, consisting of a grilled or steamed sausage served in a sliced bun with condiments like ketchup, mustard, onions, or relish."
+    },
+    {
+        id: 5,
+        title: "Arepa",
+        cuisine: "Venezuelan",
+        flag: "fi-ve", 
+        price: "$ 3-7",
+        images: [
+            "gbfoodimages/arepa1.jpg",
+            "gbfoodimages/arepa2.jpg"
+        ],
+        summary: "Arepas are Venezuelan and Colombian street foods made of ground maize dough, grilled or fried, and stuffed with fillings such as cheese, shredded beef, or avocado."
+    },
+    {
+        id: 6,
+        title: "Falafel",
+        cuisine: "Middle Eastern",
+        flag: "fi-il", 
+        price: "$ 2-5",
+        images: [
+            "gbfoodimages/falafel1.jpg",
+            "gbfoodimages/falafel2.jpg"
+        ],
+        summary: "Falafel are deep-fried balls made from ground chickpeas or fava beans, commonly served in pita bread with salad and tahini. They are a staple Middle Eastern street food."
+    },
+    {
+        id: 7,
+        title: "Gimbap",
+        cuisine: "Korean",
+        flag: "fi-kr", 
+        price: "₩ 2000-5000",
+        images: [
+            "gbfoodimages/gimbap1.jpg",
+            "gbfoodimages/gimbap2.jpg"
+        ],
+        summary: "Gimbap is a Korean street food made of steamed white rice and various fillings rolled in dried seaweed sheets, similar in appearance to sushi but with different flavors."
+    },
+    {
+        id: 8,
+        title: "Currywurst",
+        cuisine: "German",
+        flag: "fi-de", 
+        price: "€ 3-6",
+        images: [
+            "gbfoodimages/currywurst1.jpg",
+            "gbfoodimages/currywurst2.jpg"
+        ],
+        summary: "Currywurst is a German fast food consisting of steamed, fried sausage cut into slices and seasoned with curry ketchup, often served with fries. It’s a Berlin street food classic."
+    },
+    {
+        id: 9,
+        title: "Samosa",
+        cuisine: "Indian",
+        flag: "fi-in", 
+        price: "₹ 10-30 (per piece)",
+        images: [
+            "gbfoodimages/samosa1.jpg",
+            "gbfoodimages/samosa2.jpg"
+        ],
+        summary: "Samosas are a popular Indian street food consisting of a fried pastry filled with spiced potatoes, peas, and sometimes meat, served with tangy chutneys."
+    },
+    {
+        id: 10,
+        title: "Empanada",
+        cuisine: "Argentinian",
+        flag: "fi-ar", 
+        price: "$ 2-4",
+        images: [
+            "gbfoodimages/empanada1.jpg",
+            "gbfoodimages/empanada2.jpg"
+        ],
+        summary: "Empanadas are a staple street snack in Argentina and Latin America, made of pastry dough filled with beef, chicken, or cheese, then baked or fried."
+    },
+    {
+        id: 11,
+        title: "Jerk Chicken",
+        cuisine: "Jamaican",
+        flag: "fi-jm", 
+        price: "$ 5-10",
+        images: [
+            "gbfoodimages/jerk1.jpg",
+            "gbfoodimages/jerk2.jpg"
+        ],
+        summary: "Jerk Chicken is a Jamaican street food favorite, where chicken is marinated with a spicy jerk seasoning blend and slow-cooked over pimento wood, giving it a smoky flavor."
+    },
+    {
+        id: 12,
+        title: "Baozi (Steamed Buns)",
+        cuisine: "Chinese",
+        flag: "fi-cn", 
+        price: "¥ 5-15",
+        images: [
+            "gbfoodimages/bao1.jpg",
+            "gbfoodimages/bao2.jpg"
+        ],
+        summary: "Baozi are fluffy Chinese steamed buns filled with meat or vegetables, sold everywhere from breakfast stalls to night markets in China."
+    },
+    {
+        id: 13,
+        title: "Pad Thai",
+        cuisine: "Thai",
+        flag: "fi-th", 
+        price: "฿ 50-100",
+        images: [
+            "gbfoodimages/padthai1.jpg"
+        ],
+        summary: "Pad Thai is Thailand’s most famous street noodle dish, stir-fried with rice noodles, eggs, tofu, shrimp, and peanuts, balanced with tamarind and lime."
+    },
+    {
+        id: 14,
+        title: "Bánh Mì",
+        cuisine: "Vietnamese",
+        flag: "fi-vn", 
+        price: "₫ 20,000-40,000",
+        images: [
+            "gbfoodimages/banhmi2.jpg"
+        ],
+        summary: "Bánh Mì is a Vietnamese street food sandwich that combines a crispy baguette with fillings like pork, pate, pickled vegetables, and fresh herbs."
+    },
+    {
+        id: 15,
+        title: "Pierogi",
+        cuisine: "Polish",
+        flag: "fi-pl", 
+        price: "€ 3-6",
+        images: [
+            "gbfoodimages/pierogi1.jpg",
+            "gbfoodimages/pierogi2.jpg"
+        ],
+        summary: "Pierogi are Polish dumplings often sold at street fairs and markets, filled with potatoes, cheese, or meat, and either boiled or pan-fried."
+    }
+    ];
+
+    function getCachedFilter() {
+        return sessionStorage.getItem('globalFoodFilter') || '';
+    }
+    
+    function setCachedFilter(filter) {
+        sessionStorage.setItem('globalFoodFilter', filter);
+    }
+
+    function renderFoodCards(foods, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+
+        container.innerHTML = '';
+        
+        if (foods.length === 0) {
+            container.innerHTML = '<div class="text-center w-100 py-5"><p>No food found. Click "View All Foods" to see more options.</p></div>';
+            return;
+        }
+        
+        foods.forEach(food => {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 col-lg-4';
+            
+            const isLocalFood = !!food.images;
+            const imageUrl = isLocalFood ? food.images[0] : food.image;
+            const priceTag = food.price ? `<div class="price-tag">${food.price}</div>` : '';
+            const flagCode = isLocalFood ? food.flag : '';
+            const cuisineText = isLocalFood ? food.cuisine : (food.cuisines && food.cuisines.length > 0 ? food.cuisines[0] : 'Various');
+
+            col.innerHTML = `
+                <div class="card" data-food-id="${food.id}" id="food-${food.id}">
+                    <div class="position-relative card-img-container">
+                        <img src="${imageUrl}" class="card-img-top" alt="${food.title}" data-img-index="0" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIiBmaWxsPSIjODg4Ij5JbWFnZSBub3QgZm91bmQ8L3RleHQ+PC9zdmc+';">
+                        ${priceTag}
+                        ${isLocalFood && food.images.length > 1 ? `
+                        <div class="image-nav">
+                            <button class="prev-img-btn"><</button>
+                            <button class="next-img-btn">></button>
+                        </div>` : ''}
+                    </div>
+                    <div class="card-body">
+                        <h5 class="food-title">${food.title}</h5>
+                        <p class="mb-2">
+                            ${flagCode ? `<span class="fi ${flagCode}"></span>` : ''}
+                            ${cuisineText} Cuisine 
+                        </p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <button class="btn btn-outline-primary btn-sm toggle-details" data-food-id="${food.id}">
+                                View Details
+                            </button>
+                            <i class="far fa-heart like-btn" data-food-id="${food.id}"></i>
+                        </div>
+                    </div>
+                    <div class="food-details" id="details-${food.id}">
+                        <div class="p-3">
+                            <p>${food.summary}</p>
+                            <div class="share-btn-group">
+                                <button class="share-btn share-all-btn" data-food-id="${food.id}" data-food-name="${food.title}">
+                                    <i class="fas fa-share-alt"></i> Share
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(col);
+        });
+    }
+
+    function fetchAndRenderFoods(cuisine) {
+        const container = document.getElementById('food-container');
+        container.innerHTML = '<div class="text-center w-100 py-5"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>';
+        
+        setCachedFilter(cuisine);
+
+        const filteredLocalFoods = localFoods.filter(food => 
+            cuisine === '' || food.cuisine.toLowerCase() === cuisine.toLowerCase()
+        );
+
+        if (filteredLocalFoods.length > 0) {
+            renderFoodCards(filteredLocalFoods, 'food-container');
+            attachEventListeners();
+            loadLikes();
+            updateSectionTitle('Global Street Food');
+            return;
+        }
+
+        const cacheKey = `spoonacular_${cuisine}`;
+        const cachedData = sessionStorage.getItem(cacheKey);
+        
+        if (cachedData) {
+            const data = JSON.parse(cachedData);
+            if (data.results && data.results.length > 0) {
+                const transformedFoods = data.results.map(item => ({
+                    id: item.id,
+                    title: item.title,
+                    image: item.image,
+                    cuisine: item.cuisines && item.cuisines.length > 0 ? item.cuisines[0] : 'Various',
+                    summary: item.summary.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...'
+                }));
+                renderFoodCards(transformedFoods, 'food-container');
+            } else {
+                container.innerHTML = '<div class="text-center w-100 py-5"><p>No food found. Click "View All Foods" to see more options.</p></div>';
+            }
+            attachEventListeners();
+            loadLikes();
+            updateSectionTitle('Global Street Food');
+            return;
+        }
+        
+        if (cuisine === '') {
+            renderFoodCards(localFoods, 'food-container');
+            attachEventListeners();
+            loadLikes();
+            updateSectionTitle('Global Street Food');
+            return;
+        }
+
+        $.ajax({
+            url: 'https://api.spoonacular.com/recipes/complexSearch',
+            method: 'GET',
+            data: {
+                apiKey: API_KEY,
+                cuisine: cuisine,
+                number: 12,
+                addRecipeInformation: true,
+            },
+            success: function(data) {
+                sessionStorage.setItem(cacheKey, JSON.stringify(data));
+                
+                if (data.results && data.results.length > 0) {
+                    const transformedFoods = data.results.map(item => ({
+                        id: item.id,
+                        title: item.title,
+                        image: item.image,
+                        cuisine: item.cuisines && item.cuisines.length > 0 ? item.cuisines[0] : 'Various',
+                        summary: item.summary.replace(/<[^>]*>?/gm, '').substring(0, 200) + '...'
+                    }));
+                    renderFoodCards(transformedFoods, 'food-container');
+                } else {
+                    container.innerHTML = '<div class="text-center w-100 py-5"><p>No food found. Click "View All Foods" to see more options.</p></div>';
+                }
+                
+                attachEventListeners();
+                loadLikes();
+                updateSectionTitle('Global Street Food');
+            },
+            error: function(xhr, status, error) {
+                console.error("Error fetching data:", error);
+                container.innerHTML = '<div class="text-center w-100 py-5"><p class="text-danger">Failed to load food data. Please check your API key or try again later.</p></div>';
+            }
+        });
+    }
+
+    function showFavorites() {
+        const likes = JSON.parse(localStorage.getItem('foodLikesGlobal')) || {};
+        const likedFoodIds = Object.keys(likes).map(id => parseInt(id));
+        const likedFoods = localFoods.filter(food => likedFoodIds.includes(food.id));
+
+        renderFoodCards(likedFoods, 'food-container');
+        attachEventListeners();
+        loadLikes();
+        updateSectionTitle('My Favorites Global Street Food ❤️');
+
+        document.getElementById('cuisineSelect').classList.add('d-none');
+        document.getElementById('myFavoritesBtn').classList.add('d-none');
+        document.getElementById('viewAllBtn').classList.remove('d-none');
+    }
+
+    function viewAllFoods() {
+        document.getElementById('cuisineSelect').classList.remove('d-none');
+        document.getElementById('myFavoritesBtn').classList.remove('d-none');
+        document.getElementById('viewAllBtn').classList.add('d-none');
+        const cachedFilter = getCachedFilter();
+        if (cachedFilter) {
+            document.getElementById('cuisineSelect').value = cachedFilter;
+        }
+        fetchAndRenderFoods(cachedFilter);
+    }
+
+    function attachEventListeners() {
+        document.querySelectorAll('.toggle-details').forEach(button => {
+            button.addEventListener('click', function() {
+                const foodId = this.getAttribute('data-food-id');
+                const detailsElement = document.getElementById(`details-${foodId}`);
+                if (detailsElement.classList.contains('show')) {
+                    detailsElement.classList.remove('show');
+                    this.textContent = 'View Details';
+                } else {
+                    detailsElement.classList.add('show');
+                    this.textContent = 'Hide Details';
+                }
+            });
+        });
+
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const foodId = this.getAttribute('data-food-id');
+                this.classList.toggle('active');
+                this.classList.toggle('fas');
+                this.classList.toggle('far');
+                saveLike(foodId, this.classList.contains('active'));
+            });
+        });
+
+        document.querySelectorAll('.card').forEach(card => {
+            const foodId = parseInt(card.getAttribute('data-food-id'));
+            const food = localFoods.find(f => f.id === foodId);
+
+            if (!food || !food.images || food.images.length <= 1) return;
+
+            const imgElement = card.querySelector('.card-img-top');
+            const prevBtn = card.querySelector('.prev-img-btn');
+            const nextBtn = card.querySelector('.next-img-btn');
+
+            if (prevBtn) {
+                prevBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    let currentIndex = parseInt(imgElement.getAttribute('data-img-index'));
+                    currentIndex = (currentIndex - 1 + food.images.length) % food.images.length;
+                    imgElement.src = food.images[currentIndex];
+                    imgElement.setAttribute('data-img-index', currentIndex);
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    let currentIndex = parseInt(imgElement.getAttribute('data-img-index'));
+                    currentIndex = (currentIndex + 1) % food.images.length;
+                    imgElement.src = food.images[currentIndex];
+                    imgElement.setAttribute('data-img-index', currentIndex);
+                });
+            }
+        });
+
+        document.querySelectorAll('.share-all-btn').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const foodId = this.getAttribute('data-food-id');
+                const foodName = this.getAttribute('data-food-name');
+                
+                const shareUrl = `${window.location.origin}${window.location.pathname}#food-${foodId}`;
+
+                if (navigator.share) {
+                    try {
+                        await navigator.share({
+                            title: `Global Food: ${foodName}`,
+                            text: `Check out this delicious food: ${foodName}!`,
+                            url: shareUrl
+                        });
+                        console.log('Content shared successfully');
+                    } catch (error) {
+                        console.error('Error sharing:', error);
+                    }
+                } else {
+                    if (navigator.clipboard) {
+                        try {
+                            await navigator.clipboard.writeText(shareUrl);
+                            alert('Link copied to clipboard!');
+                        } catch (err) {
+                            console.error('Failed to copy text: ', err);
+                            alert('Your browser does not support the native share function. Please copy the link manually.');
+                        }
+                    } else {
+                        alert('Your browser does not support the native share function. Please copy the link manually: ' + shareUrl);
+                    }
+                }
+            });
+        });
+    }
+
+    function saveLike(foodId, isLiked) {
+        let likes = JSON.parse(localStorage.getItem('foodLikesGlobal')) || {};
+        if (isLiked) {
+            likes[foodId] = true;
+        } else {
+            delete likes[foodId];
+        }
+        localStorage.setItem('foodLikesGlobal', JSON.stringify(likes));
+    }
+
+    function loadLikes() {
+        const likes = JSON.parse(localStorage.getItem('foodLikesGlobal')) || {};
+        document.querySelectorAll('.like-btn').forEach(btn => {
+            const foodId = btn.getAttribute('data-food-id');
+            if (likes[foodId]) {
+                btn.classList.add('active', 'fas');
+                btn.classList.remove('far');
+            } else {
+                btn.classList.remove('active', 'fas');
+                btn.classList.add('far');
+            }
+        });
+    }
+    
+    function updateSectionTitle(title) {
+        const sectionTitle = document.getElementById('food-section-title');
+        if (sectionTitle) {
+            sectionTitle.textContent = title;
+        }
+    }
+
+    function scrollToFoodCard() {
+        if (window.location.hash) {
+            const foodId = window.location.hash.replace('#food-', '');
+            const cardElement = document.querySelector(`.card[data-food-id="${foodId}"]`);
+            if (cardElement) {
+                cardElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                const detailsBtn = cardElement.querySelector('.toggle-details');
+                const detailsElement = cardElement.querySelector('.food-details');
+                if (detailsBtn && detailsElement && !detailsElement.classList.contains('show')) {
+                    detailsBtn.click();
+                }
+            }
+        }
+    }
+
+    $(document).ready(function() {
+        const cachedFilter = getCachedFilter();
+        if (cachedFilter) {
+            document.getElementById('cuisineSelect').value = cachedFilter;
+        }
+        
+        fetchAndRenderFoods(cachedFilter); 
+        
+        const cuisineSelect = document.getElementById('cuisineSelect');
+        if (cuisineSelect) {
+            cuisineSelect.addEventListener('change', () => {
+                const selectedCuisine = cuisineSelect.value;
+                fetchAndRenderFoods(selectedCuisine);
+            });
+        }
+
+        const myFavoritesBtn = document.getElementById('myFavoritesBtn');
+        if (myFavoritesBtn) {
+            myFavoritesBtn.addEventListener('click', showFavorites);
+        }
+
+        const viewAllBtn = document.getElementById('viewAllBtn');
+        if (viewAllBtn) {
+            viewAllBtn.addEventListener('click', viewAllFoods);
+        }
+        
+        scrollToFoodCard(); 
+    });
+</script>
+</body>
+</html>
