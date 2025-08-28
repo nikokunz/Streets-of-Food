@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Streets of Food | Our Team</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #D16002;
+            --primary-dark: #A54D00;
+            --primary-light: #FF8C42;
+            --light-bg: #FFF5EB;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding-top: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .navbar-toggler {
+            border: none;
+            color: white !important;
+        }
+        
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        /* Malaysian Street Food Header */
+        .food-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)), 
+                        url('teampics/pasarmalam.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .food-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, #f8f9fa);
+        }
+        
+        .food-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin-bottom: 1rem;
+        }
+        
+        .food-header p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+        
+        .team-member-card {
+            transition: transform 0.3s;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .team-img-container {
+            height: 368px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .team-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .team-member-card:hover .team-img {
+            transform: scale(1.05);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-weight: 700;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        .feedback-card {
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-light);
+            box-shadow: 0 0 0 0.25rem rgba(209, 96, 2, 0.25);
+        }
+        
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .export-btn {
+            background-color: var(--primary-dark);
+            border: none;
+        }
+        
+        .export-btn:hover {
+            background-color: #8a3f00;
+        }
+        
+        .feedback-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        @media (min-width: 768px) {
+            .feedback-container {
+                width: 90%;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .feedback-container {
+                width: 80%;
+            }
+            
+            .food-header h1 {
+                font-size: 4.5rem;
+            }
+            
+            .navbar-nav .nav-link {
+                margin: 0 0.2rem;
+            }
+        }
+        
+        .feedback-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .feedback-item {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .feedback-text {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+        
+        .feedback-meta {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        .feedback-form-container {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .privacy-note {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+        
+        .center-title {
+            text-align: center;
+        }
+        
+        .center-title .section-title {
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .center-title .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+        }
+        
+        .dev-section {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #ccc;
+        }
+        
+        .toggle-dev-btn {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .toggle-dev-btn:hover {
+            background-color: #5a6268;
+        }
+        
+        .password-prompt {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .food-theme-bg {
+            background-color: #FFF5EB;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid #FFE4CC;
+        }
+        
+        .jump-to-feedback {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .social-share {
+            margin-top: 2rem;
+            text-align: center;
+            padding: 1.5rem;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.3rem;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        
+        .share-btn:hover {
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        .facebook { background-color: #3b5998; }
+        .twitter { background-color: #1da1f2; }
+        .whatsapp { background-color: #25d366; }
+        .linkedin { background-color: #0077b5; }
+        .pinterest { background-color: #bd081c; }
+        .email { background-color: #777; }
+        
+        .api-status {
+            padding: 0.5rem;
+            margin-top: 1rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .api-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .api-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .session-info {
+            background-color: #f8f9fa;
+            padding: 0.75rem;
+            border-radius: 5px;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .session-info h6 {
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            color: #495057;
+        }
+        
+        .session-info p {
+            margin-bottom: 0.3rem;
+        }
+        
+        .no-feedback {
+            text-align: center;
+            padding: 2rem;
+            color: #6c757d;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+  <!-- Navigation Bar for Gallery.html -->
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" style="background-color: #D16002; padding: 0.8rem 1rem; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+    <div class="container">
+        <a class="navbar-brand" href="Home.html" style="font-weight: 700; font-size: 1.5rem; color: white !important;">
+            <i class="fas fa-utensils me-2"></i>Streets of Food
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="Home.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="About.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Malaysia.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Malaysia</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Global.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Global</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Event.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Recipe.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Recipe</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Quiz.html" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Quiz</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="Team.html" style="color: white !important; background-color: #A54D00; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Team.html#feedbackSection" style="color: rgba(255, 255, 255, 0.85) !important; font-weight: 500; padding: 0.5rem 1rem; margin: 0 0.1rem; border-radius: 4px; transition: all 0.3s ease;">Feedback</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+    <!-- Malaysian Street Food Header -->
+    <header class="food-header">
+        <div class="container">
+            <h1>Streets of Food</h1>
+            <p>Authentic street food experiences crafted with passion</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Team Section -->
+        <section class="py-4 mb-5">
+            <div class="container">
+                <div class="center-title">
+                    <h2 class="section-title">Meet Our Team</h2>
+                </div>
+                <p class="text-center text-muted mb-5">We are students from UTAR and this is our assignment.</p>
+                <div class="row">
+                    <!-- Team Member 1 -->
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card team-member-card">
+                            <div class="team-img-container">
+                                <img src="teampics/nicolewongkamyan.jpg" class="team-img" alt="Nicole Wong Kam Yan">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Nicole Wong Kam Yan</h5>
+                                <p class="card-text">Team Leader designed and personally concocted "What Malaysian Street Food Are You?" quiz. She also designed this page and ensures your feedbacks and thoughts are heard.</p>
+                                <div class="mt-3">
+                                    <span class="badge bg-primary me-1">2204714</span>
+                                    <span class="badge bg-primary me-1">CS</span>
+                                    <span class="badge bg-primary">FICT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 2 -->
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card team-member-card">
+                            <div class="team-img-container">
+                                <img src="teampics/chiasiewlin.jpg" class="team-img" alt="Chia Siew Lin">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Chia Siew Lin</h5>
+                                <p class="card-text">Lead Designer who desgined and developed the home page. She also did the write up for the "About Streetfood" information page.</p>
+                                <div class="mt-3">
+                                    <span class="badge bg-primary me-1">2401966</span>
+                                    <span class="badge bg-primary me-1">CS</span>
+                                    <span class="badge bg-primary">FICT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 3 -->
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card team-member-card">
+                            <div class="team-img-container">
+                                <img src="teampics/limyuxuan.jpg" class="team-img" alt="Lim Yu Xuan">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Lim Yu Xuan</h5>
+                                <p class="card-text">Lead Researcher who also researched all kinds of street foods from Malaysia and globally. She made sure to also include recommended places.</p>
+                                <div class="mt-3">
+                                    <span class="badge bg-primary me-1">2401158</span>
+                                    <span class="badge bg-primary me-1">CS</span>
+                                    <span class="badge bg-primary">FICT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member 4 -->
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="card team-member-card">
+                            <div class="team-img-container">
+                                <img src="teampics/yongziyi.jpg" class="team-img" alt="Yong ZiYi">
+                            </div>
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Yong ZiYi</h5>
+                                <p class="card-text">Social Media Expert who brought put together the upcoming food events. She also put together various street food recipes for you to try at home.</p>
+                                <div class="mt-3">
+                                    <span class="badge bg-primary me-1">2302387</span>
+                                    <span class="badge bg-primary me-1">CS</span>
+                                    <span class="badge bg-primary">FICT</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feedback Form Section -->
+        <section id="feedbackSection" class="py-4 food-theme-bg mb-5">
+            <div class="container">
+                <div class="center-title">
+                    <h2 class="section-title">Share Your Feedback</h2>
+                </div>
+                <p class="text-center text-muted mb-4">We value your input. Your personal information will not be shown publicly.</p>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <h5 class="card-title mb-4"><i class="fas fa-comment-dots me-2"></i>Send Us Your Thoughts</h5>
+                                
+                                <div class="privacy-note">
+                                    <i class="fas fa-lock me-2"></i>
+                                    <strong>Privacy Assured:</strong> Your name and email are collected for internal use only and will never be displayed publicly.
+                                </div>
+                                
+                                <form id="feedbackForm">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="name" class="form-label">Your Name (Private)</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Enter your name" required>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="email" class="form-label">Your Email (Private)</label>
+                                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Your Feedback</label>
+                                        <textarea class="form-control" id="message" rows="4" placeholder="Share your thoughts here..." required></textarea>
+                                        <div class="form-text">Only your feedback message will be shown publicly, not your name or email.</div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary px-4">
+                                        <i class="fas fa-paper-plane me-2"></i>Submit Feedback
+                                    </button>
+                                </form>
+                                
+                                <div id="apiStatus" class="api-status mt-3" style="display: none;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Public Feedback Display (Anonymous) -->
+        <section class="py-4 mb-5">
+            <div class="container">
+                <div class="center-title">
+                    <h2 class="section-title">Customer Feedback</h2>
+                </div>
+                <p class="text-center text-muted mb-4">See what our customers are saying (personal information is hidden)</p>
+                
+                <div class="feedback-container">
+                    <div id="publicFeedbackList">
+                        <!-- No fake feedbacks - only real user submissions will appear here -->
+                        <div class="no-feedback">
+                            <i class="fas fa-comments fa-3x mb-3"></i>
+                            <p>No feedback yet. Be the first to share your thoughts!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Social Media Sharing Section -->
+        <section class="social-share mb-4">
+            <div class="center-title">
+                <h2 class="section-title">Share This Page</h2>
+            </div>
+            <p class="text-center mb-4">Help others discover our delicious Malaysian street food!</p>
+            
+            <div class="d-flex flex-wrap justify-content-center">
+                <a href="#" class="share-btn facebook" onclick="shareOnFacebook()">
+                    <i class="fab fa-facebook-f me-2"></i>Facebook
+                </a>
+                <a href="#" class="share-btn twitter" onclick="shareOnTwitter()">
+                    <i class="fab fa-twitter me-2"></i>Twitter
+                </a>
+                <a href="#" class="share-btn whatsapp" onclick="shareOnWhatsApp()">
+                    <i class="fab fa-whatsapp me-2"></i>WhatsApp
+                </a>
+                <a href="#" class="share-btn linkedin" onclick="shareOnLinkedIn()">
+                    <i class="fab fa-linkedin-in me-2"></i>LinkedIn
+                </a>
+                <a href="#" class="share-btn pinterest" onclick="shareOnPinterest()">
+                    <i class="fab fa-pinterest-p me-2"></i>Pinterest
+                </a>
+                <a href="#" class="share-btn email" onclick="shareViaEmail()">
+                    <i class="fas fa-envelope me-2"></i>Email
+                </a>
+            </div>
+            
+            <!-- Session Storage Info - Made smaller and more inconspicuous -->
+            <div class="session-info mt-4">
+                <h6><i class="fas fa-info-circle me-1"></i>Your Visit Information</h6>
+                <div id="sessionData"></div>
+            </div>
+        </section>
+
+        <!-- Developer Tools Section (Hidden by default) -->
+        <section class="py-4 mb-5 dev-section">
+            <div class="container text-center">
+                <button class="toggle-dev-btn" onclick="toggleDevSection()">
+                    <i class="fas fa-cog me-1"></i> Developer Tools
+                </button>
+                
+                <div id="devToolsSection" style="display: none;">
+                    <div class="center-title">
+                        <h2 class="section-title">Export Feedback Data</h2>
+                    </div>
+                    <p class="text-center text-muted mb-4">For development team use only</p>
+                    
+                    <div class="password-prompt">
+                        <h5><i class="fas fa-lock me-2"></i>Authentication Required</h5>
+                        <p>Please enter the security password to access export functions:</p>
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="input-group mb-3">
+                                    <input type="password" class="form-control" id="devPassword" placeholder="Enter password">
+                                    <button class="btn btn-primary" type="button" onclick="checkPassword()">Unlock</button>
+                                </div>
+                                <div id="passwordError" class="text-danger" style="display: none;">
+                                    Incorrect password. Access denied.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="exportFunctions" style="display: none;">
+                        <div class="privacy-note text-center mx-auto" style="max-width: 600px;">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            <strong>Data Privacy:</strong> This exported data contains private information that is not visible to the public. 
+                            It is only accessible to authorized developers.
+                        </div>
+                        
+                        <div class="row justify-content-center mt-4">
+                            <div class="col-lg-8">
+                                <div class="card">
+                                    <div class="card-body text-center">
+                                        <p class="card-text">Export all feedback data including names and emails for internal use</p>
+                                        <div class="d-flex gap-2 flex-wrap justify-content-center">
+                                            <button class="btn btn-success" onclick="exportData('csv')">
+                                                <i class="fas fa-file-csv me-2"></i>Export as CSV
+                                            </button>
+                                            <button class="btn btn-primary" onclick="exportData('txt')">
+                                                <i class="fas fa-file-alt me-2"></i>Export as Text
+                                            </button>
+                                            <button class="btn btn-danger" onclick="clearData()">
+                                                <i class="fas fa-trash me-2"></i>Clear Data
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-4 text-center rounded">
+            <div class="container">
+                <p class="mb-0">© 2025 Streets of Foods. All rights reserved.</p>
+                <small>We value your privacy - your personal information is never shown publicly.</small>
+            </div>
+        </footer>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script>
+        // Security password - in a real application, this would be stored securely on the server
+        const DEV_PASSWORD = "dev123"; // Change this to a more secure password
+        
+        // API endpoint (using JSONPlaceholder for demonstration)
+        const API_URL = "https://jsonplaceholder.typicode.com/posts";
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const feedbackForm = document.getElementById('feedbackForm');
+            
+            // Initialize session storage
+            initSessionStorage();
+            
+            // Load any existing feedback from localStorage
+            loadFeedback();
+            
+            feedbackForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const message = document.getElementById('message').value;
+                
+                // Create feedback object with timestamp for sorting
+                const feedback = {
+                    name,
+                    email,
+                    message,
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    timestamp: new Date().getTime(), // For sorting
+                    publicId: 'user#' + Math.random().toString(36).substr(2, 9)
+                };
+                
+                // Save feedback
+                saveFeedback(feedback);
+                
+                // Submit feedback to API
+                submitFeedbackToAPI(feedback);
+                
+                // Show confirmation
+                alert('Thank you for your feedback! Your personal information will remain private.');
+                
+                // Reset form
+                feedbackForm.reset();
+            });
+            
+            function initSessionStorage() {
+                // Check if this is a new session
+                if (!sessionStorage.getItem('sessionStart')) {
+                    sessionStorage.setItem('sessionStart', new Date().toString());
+                    sessionStorage.setItem('pageViews', '1');
+                } else {
+                    // Increment page view count
+                    let pageViews = parseInt(sessionStorage.getItem('pageViews')) || 0;
+                    sessionStorage.setItem('pageViews', (pageViews + 1).toString());
+                }
+                
+                // Display session information
+                displaySessionInfo();
+            }
+            
+            function displaySessionInfo() {
+                const sessionStart = sessionStorage.getItem('sessionStart');
+                const pageViews = sessionStorage.getItem('pageViews');
+                const sessionDataElement = document.getElementById('sessionData');
+                
+                if (sessionStart && pageViews && sessionDataElement) {
+                    const startTime = new Date(sessionStart);
+                    const now = new Date();
+                    const duration = Math.floor((now - startTime) / 1000); // in seconds
+                    
+                    const hours = Math.floor(duration / 3600);
+                    const minutes = Math.floor((duration % 3600) / 60);
+                    const seconds = duration % 60;
+                    
+                    sessionDataElement.innerHTML = `
+                        <p>Session started: ${startTime.toLocaleTimeString()}</p>
+                        <p>Pages viewed: ${pageViews}</p>
+                        <p>Duration: ${hours}h ${minutes}m ${seconds}s</p>
+                    `;
+                }
+            }
+            
+            function saveFeedback(feedback) {
+                let feedbacks = [];
+                
+                // Get existing feedback from localStorage
+                if (localStorage.getItem('feedbacks')) {
+                    feedbacks = JSON.parse(localStorage.getItem('feedbacks'));
+                }
+                
+                // Add new feedback at the beginning of the array (most recent first)
+                feedbacks.unshift(feedback);
+                
+                // Save back to localStorage
+                localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+                
+                // Update public display
+                addFeedbackToDisplay(feedback);
+            }
+            
+            function submitFeedbackToAPI(feedback) {
+                // Show loading state
+                const apiStatus = document.getElementById('apiStatus');
+                apiStatus.textContent = "Submitting your feedback...";
+                apiStatus.className = "api-status";
+                apiStatus.style.display = "block";
+                
+                // Using jQuery AJAX to submit to a REST API
+                $.ajax({
+                    url: API_URL,
+                    method: 'POST',
+                    data: JSON.stringify({
+                        title: `Feedback from ${feedback.name}`,
+                        body: feedback.message,
+                        userId: 1, // This would typically be a user ID from your system
+                        email: feedback.email,
+                        timestamp: feedback.timestamp
+                    }),
+                    contentType: 'application/json',
+                    success: function(response) {
+                        // Show success message
+                        apiStatus.textContent = "Thank you! Your feedback has been submitted successfully.";
+                        apiStatus.className = "api-status api-success";
+                        
+                        // Store API response ID in localStorage for reference
+                        let feedbacks = JSON.parse(localStorage.getItem('feedbacks')) || [];
+                        if (feedbacks.length > 0) {
+                            feedbacks[0].apiId = response.id;
+                            localStorage.setItem('feedbacks', JSON.stringify(feedbacks));
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Show error message
+                        apiStatus.textContent = "Sorry, we couldn't submit your feedback to our server. It has been saved locally.";
+                        apiStatus.className = "api-status api-error";
+                        console.error("API Error:", error);
+                    }
+                });
+            }
+            
+            function loadFeedback() {
+                if (localStorage.getItem('feedbacks')) {
+                    const feedbacks = JSON.parse(localStorage.getItem('feedbacks'));
+                    const publicFeedbackList = document.getElementById('publicFeedbackList');
+                    
+                    // Clear the default messages if there are stored feedbacks
+                    if (feedbacks.length > 0) {
+                        publicFeedbackList.innerHTML = '';
+                    }
+                    
+                    // Add each feedback to display (already sorted by timestamp)
+                    feedbacks.forEach(feedback => {
+                        addFeedbackToDisplay(feedback);
+                    });
+                }
+            }
+            
+            function addFeedbackToDisplay(feedback) {
+                const publicFeedbackList = document.getElementById('publicFeedbackList');
+                
+                // Remove the "no feedback" message if it exists
+                if (publicFeedbackList.querySelector('.no-feedback')) {
+                    publicFeedbackList.innerHTML = '';
+                }
+                
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = 'feedback-item';
+                
+                feedbackItem.innerHTML = `
+                    <p class="feedback-text">"${feedback.message}"</p>
+                    <div class="feedback-meta">Submitted on ${feedback.date} at ${feedback.time}</div>
+                `;
+                
+                // Add new feedback at the top
+                publicFeedbackList.prepend(feedbackItem);
+            }
+            
+            // Social Media Sharing Functions
+            window.shareOnFacebook = function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent("Check out this amazing Malaysian street food website!");
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${text}`, '_blank');
+            };
+            
+            window.shareOnTwitter = function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent("Discover authentic Malaysian street food! #MalaysianFood #StreetFood");
+                window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+            };
+            
+            window.shareOnWhatsApp = function() {
+                const url = encodeURIComponent(window.location.href);
+                const text = encodeURIComponent("Check out this amazing Malaysian street food website!");
+                window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+            };
+            
+            window.shareOnLinkedIn = function() {
+                const url = encodeURIComponent(window.location.href);
+                const title = encodeURIComponent("Malaysian Street Food Discovery");
+                const summary = encodeURIComponent("Explore authentic Malaysian street food experiences");
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}&summary=${summary}`, '_blank');
+            };
+            
+            window.shareOnPinterest = function() {
+                const url = encodeURIComponent(window.location.href);
+                const media = encodeURIComponent("https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80");
+                const description = encodeURIComponent("Malaysian Street Food - Authentic flavors and experiences");
+                window.open(`https://pinterest.com/pin/create/button/?url=${url}&media=${media}&description=${description}`, '_blank');
+            };
+            
+            window.shareViaEmail = function() {
+                const subject = encodeURIComponent("Malaysian Street Food Website");
+                const body = encodeURIComponent(`I found this amazing website about Malaysian street food: ${window.location.href}`);
+                window.location.href = `mailto:?subject=${subject}&body=${body}`;
+            };
+            
+            window.toggleDevSection = function() {
+                const devSection = document.getElementById('devToolsSection');
+                devSection.style.display = devSection.style.display === 'none' ? 'block' : 'none';
+            };
+            
+            window.checkPassword = function() {
+                const passwordInput = document.getElementById('devPassword');
+                const passwordError = document.getElementById('passwordError');
+                const exportFunctions = document.getElementById('exportFunctions');
+                
+                if (passwordInput.value === DEV_PASSWORD) {
+                    exportFunctions.style.display = 'block';
+                    passwordError.style.display = 'none';
+                    passwordInput.value = '';
+                } else {
+                    passwordError.style.display = 'block';
+                    exportFunctions.style.display = 'none';
+                }
+            };
+            
+            window.exportData = function(format) {
+                if (!localStorage.getItem('feedbacks') || JSON.parse(localStorage.getItem('feedbacks')).length === 0) {
+                    alert('No feedback data available to export.');
+                    return;
+                }
+                
+                const feedbacks = JSON.parse(localStorage.getItem('feedbacks'));
+                let dataString = '';
+                let mimeType = '';
+                let fileExtension = '';
+                
+                if (format === 'csv') {
+                    // Create CSV content
+                    dataString = "Name,Email,Message,Date,Time,API ID\n";
+                    feedbacks.forEach(feedback => {
+                        dataString += `"${feedback.name}","${feedback.email}","${feedback.message.replace(/"/g, '""')}","${feedback.date}","${feedback.time}","${feedback.apiId || 'N/A'}"\n`;
+                    });
+                    mimeType = 'text/csv';
+                    fileExtension = 'csv';
+                } else {
+                    // Create text content
+                    feedbacks.forEach(feedback => {
+                        dataString += `Name: ${feedback.name}\n`;
+                        dataString += `Email: ${feedback.email}\n`;
+                        dataString += `Message: ${feedback.message}\n`;
+                        dataString += `Date: ${feedback.date}\n`;
+                        dataString += `Time: ${feedback.time}\n`;
+                        dataString += `API ID: ${feedback.apiId || 'Not submitted to API'}\n`;
+                        dataString += '----------------------------------------\n\n';
+                    });
+                    mimeType = 'text/plain';
+                    fileExtension = 'txt';
+                }
+                
+                // Create download link
+                const blob = new Blob([dataString], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `feedback_data.${fileExtension}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert(`Feedback data has been exported as ${format.toUpperCase()}`);
+            };
+            
+            window.clearData = function() {
+                if (confirm('Are you sure you want to clear all feedback data? This cannot be undone.')) {
+                    localStorage.removeItem('feedbacks');
+                    document.getElementById('publicFeedbackList').innerHTML = `
+                        <div class="no-feedback">
+                            <i class="fas fa-comments fa-3x mb-3"></i>
+                            <p>No feedback yet. Be the first to share your thoughts!</p>
+                        </div>
+                    `;
+                    alert('All feedback data has been cleared.');
+                }
+            };
+        });
+    </script>
+</body>
+</html>
