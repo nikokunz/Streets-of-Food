@@ -855,7 +855,7 @@
                 const result = document.getElementById('result-food').textContent;
                 const subtitle = document.getElementById('result-subtitle').textContent;
                 
-                let shareText = `I got ${result} - ${subtitle} in the Malaysian Street Food Quiz!`;
+                let shareText = `I got ${result} - ${subtitle} in the Malaysian Street Food Quiz! You should give it a try at https://nikokunz.github.io/Streets-of-Food/Quiz.html !`;
                 
                 if (platform === 'twitter') {
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`, '_blank');
@@ -900,4 +900,5 @@
         loadQuestion();
     </script>
 </body>
+
 </html>
